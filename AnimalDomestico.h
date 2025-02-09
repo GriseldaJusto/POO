@@ -24,15 +24,22 @@ public:
     // Construtor
     AnimalDomestico(string nome = "", int idade = 0, string raca = "", double peso = 0.0, string cor = "", 
                     string genero = "", string dono = "", string endereco = "", string telefone = "", string historicoMedico = "");
-    virtual ~AnimalDomestico() {} // Destrutor virtual para evitar vazamento de memória
+    virtual ~AnimalDomestico() {}
     
     // Métodos virtuais puros
     virtual void exibir() const = 0;
     virtual void salvar(ofstream &arquivo) const = 0;
     virtual void carregar(ifstream &arquivo) = 0;
     
-    // Método de acesso ao nome
+    // Métodos de acesso (getters e setters)
     string getNome() const { return nome; }
+    int getIdade() const { return idade; }
+    string getRaca() const { return raca; }
+    double getPeso() const { return peso; }
+    
+    void setIdade(int novaIdade) { idade = novaIdade; }
+    void setRaca(const string &novaRaca) { raca = novaRaca; }
+    void setPeso(double novoPeso) { peso = novoPeso; }
 };
 
 #endif

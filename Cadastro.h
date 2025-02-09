@@ -5,12 +5,11 @@
 #include "Gato.h"
 #include <vector>
 
-// Classe responsável por gerenciar o CRUD dos animais
 class Cadastro {
 private:
-    vector<AnimalDomestico*> animais; // Lista de ponteiros para animais
+    vector<AnimalDomestico*> animais;
 public:
-    ~Cadastro(); // Destrutor adequado para liberar memória
+    ~Cadastro();
     void adicionar(AnimalDomestico* animal);
     void listar() const;
     void atualizar(const string& nome);

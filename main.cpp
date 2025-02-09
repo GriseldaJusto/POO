@@ -2,41 +2,86 @@
 
 int main() {
     Cadastro cadastro;
-    
-    // Criando alguns objetos
-    Cachorro* c = new Cachorro("Rex", 3, "Labrador", 30.5, "Preto", "M", "João", "Rua A", "9999-9999", "Vacinado");
-    Gato* g = new Gato("Mia", 2, "Siamês", 4.2, "Branco", "F", "Maria", "Rua B", "8888-8888", "Castrada");
 
-    // Adicionando os animais ao cadastro
-    cadastro.adicionar(c);
-    cadastro.adicionar(g);
-    
-    // Listando antes de salvar
-    cout << "Lista de animais antes de salvar:" << endl;
-    cadastro.listar();
-    
-    // Salvando no arquivo
-    cadastro.salvarArquivo("animais.dat");
-    
-    // Limpando os dados em memória antes de carregar do arquivo
-    cadastro = Cadastro();
-    
-    // Carregando os dados do arquivo
-    cadastro.carregarArquivo("animais.dat");
-    
-    // Listando após carregar
-    cout << "Lista de animais após carregar:" << endl;
-    cadastro.listar();
-    
-    // Testando atualização
-    cadastro.atualizar("Rex");
-    
-    // Removendo um animal
-    cadastro.remover("Mia");
-    
-    // Listando após atualização e remoção
-    cout << "Lista final de animais:" << endl;
-    cadastro.listar();
-    
+    while (true) {
+        cout << "=== Sistema de Cadastro de Animais ===" << endl;
+        cout << "1. Adicionar Animal" << endl;
+        cout << "2. Listar Animais" << endl;
+        cout << "3. Atualizar Animal" << endl;
+        cout << "4. Remover Animal" << endl;
+        cout << "5. Salvar em Arquivo" << endl;
+        cout << "6. Carregar do Arquivo" << endl;
+        cout << "7. Sair" << endl;
+
+        int opcao;
+        cout << "Escolha uma opção: ";
+        cin >> opcao;
+
+        if (opcao == 7) break;
+
+        switch (opcao) {
+            case 1: {
+                string nome, raca, cor, genero, dono, endereco, telefone, historicoMedico;
+                int idade;
+                double peso;
+                cout << "Digite os detalhes do animal: " << endl;
+                cout << "Nome: ";
+                cin.ignore();
+                getline(cin, nome);
+                cout << "Idade: ";
+                cin >> idade;
+                cout << "Raça: ";
+                cin.ignore();
+                getline(cin, raca);
+                cout << "Peso: ";
+                cin >> peso;
+                cout << "Cor: ";
+                cin.ignore();
+                getline(cin, cor);
+                cout << "Gênero: ";
+                getline(cin, genero);
+                cout << "Dono: ";
+                getline(cin, dono);
+                cout << "Endereço: ";
+                getline(cin, endereco);
+                cout << "Telefone: ";
+                getline(cin, telefone);
+                cout << "Histórico Médico: ";
+                getline(cin, historicoMedico);
+
+                Cachorro* c = new Cachorro(nome, idade, raca, peso, cor, genero, dono, endereco, telefone, historicoMedico);
+                cadastro.adicionar(c);
+                break;
+            }
+            case 2:
+                cadastro.listar();
+                break;
+            case 3: {
+                string nome;
+                cout << "Digite o nome do animal a ser atualizado: ";
+                cin.ignore();
+                getline(cin, nome);
+                cadastro.atualizar(nome);
+                break;
+            }
+            case 4: {
+                string nome;
+                cout << "Digite o nome do animal a ser removido: ";
+                cin.ignore();
+                getline(cin, nome);
+                cadastro.remover(nome);
+                break;
+            }
+            case 5:
+                cadastro.salvarArquivo("animais.dat");
+                break;
+            case 6:
+                cadastro.carregarArquivo("animais.dat");
+                break;
+            default:
+                cout << "Opção inválida!" << endl;
+        }
+    }
+
     return 0;
 }

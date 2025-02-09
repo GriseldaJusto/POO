@@ -22,13 +22,22 @@ void Cadastro::atualizar(const string& nome) {
     for (auto& animal : animais) {
         if (animal->getNome() == nome) {
             cout << "Atualizando dados de " << nome << "..." << endl;
-            cout << "Nova idade: ";
-            cin >> animal->idade;
-            cout << "Novo peso: ";
-            cin >> animal->peso;
+            
+            int novaIdade;
+            cout << "Nova idade (não pode ser negativa): ";
+            cin >> novaIdade;
+            if (novaIdade >= 0) animal->setIdade(novaIdade);
+            
+            double novoPeso;
+            cout << "Novo peso (não pode ser negativo): ";
+            cin >> novoPeso;
+            if (novoPeso >= 0) animal->setPeso(novoPeso);
+            
+            string novaRaca;
             cout << "Nova raça: ";
             cin.ignore();
-            getline(cin, animal->raca);
+            getline(cin, novaRaca);
+            animal->setRaca(novaRaca);
             return;
         }
     }
