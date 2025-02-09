@@ -1,5 +1,12 @@
-
 #include "Cadastro.h"
+
+// Destrutor para liberar memória alocada dinamicamente
+Cadastro::~Cadastro() {
+    for (auto& animal : animais) {
+        delete animal;
+    }
+    animais.clear();
+}
 
 void Cadastro::adicionar(AnimalDomestico* animal) {
     animais.push_back(animal);
@@ -15,7 +22,13 @@ void Cadastro::atualizar(const string& nome) {
     for (auto& animal : animais) {
         if (animal->getNome() == nome) {
             cout << "Atualizando dados de " << nome << "..." << endl;
-            animal->exibir();
+            cout << "Nova idade: ";
+            cin >> animal->idade;
+            cout << "Novo peso: ";
+            cin >> animal->peso;
+            cout << "Nova raça: ";
+            cin.ignore();
+            getline(cin, animal->raca);
             return;
         }
     }

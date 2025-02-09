@@ -1,9 +1,9 @@
-
 #ifndef GATO_H
 #define GATO_H
 
 #include "AnimalDomestico.h"
 
+// Classe concreta Gato
 class Gato : public AnimalDomestico {
 public:
     Gato(string nome = "", int idade = 0, string raca = "", double peso = 0.0, string cor = "", 
