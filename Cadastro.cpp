@@ -1,6 +1,5 @@
 #include "Cadastro.h"
 
-// Destrutor para liberar memória alocada dinamicamente
 Cadastro::~Cadastro() {
     for (auto& animal : animais) {
         delete animal;
@@ -10,11 +9,16 @@ Cadastro::~Cadastro() {
 
 void Cadastro::adicionar(AnimalDomestico* animal) {
     animais.push_back(animal);
+    cout << "O animal foi adicionado com sucesso!" << endl;  // Mensagem de sucesso
 }
 
 void Cadastro::listar() const {
-    for (const auto& animal : animais) {
-        animal->exibir();
+    if (animais.empty()) {
+        cout << "Não existe nenhum cadastro" << endl;
+    } else {
+        for (const auto& animal : animais) {
+            animal->exibir();
+        }
     }
 }
 
@@ -28,16 +32,28 @@ void Cadastro::atualizar(const string& nome) {
             cin >> novaIdade;
             if (novaIdade >= 0) animal->setIdade(novaIdade);
             
-            double novoPeso;
-            cout << "Novo peso (não pode ser negativo): ";
-            cin >> novoPeso;
-            if (novoPeso >= 0) animal->setPeso(novoPeso);
-            
-            string novaRaca;
-            cout << "Nova raça: ";
+            string novoDono;
+            cout << "Novo dono: ";
             cin.ignore();
-            getline(cin, novaRaca);
-            animal->setRaca(novaRaca);
+            getline(cin, novoDono);
+            animal->setDono(novoDono);
+
+            string novoEndereco;
+            cout << "Novo endereço: ";
+            getline(cin, novoEndereco);
+            animal->setEndereco(novoEndereco);
+
+            string novoTelefone;
+            cout << "Novo telefone: ";
+            getline(cin, novoTelefone);
+            animal->setTelefone(novoTelefone);
+
+            string novoHistorico;
+            cout << "Novo histórico médico: ";
+            getline(cin, novoHistorico);
+            animal->setHistoricoMedico(novoHistorico);
+
+            cout << "Os dados do animal foram atualizados com sucesso!" << endl;  // Mensagem de sucesso
             return;
         }
     }
@@ -58,10 +74,15 @@ void Cadastro::remover(const string& nome) {
 
 void Cadastro::salvarArquivo(const string &arquivoNome) const {
     ofstream arquivo(arquivoNome, ios::binary);
+    if (!arquivo) {
+        cout << "Erro ao abrir o arquivo!" << endl;
+        return;
+    }
     for (const auto& animal : animais) {
         animal->salvar(arquivo);
     }
     arquivo.close();
+    cout << "Dados salvos com sucesso em " << arquivoNome << endl;  // Mensagem de sucesso
 }
 
 void Cadastro::carregarArquivo(const string &arquivoNome) {
@@ -77,4 +98,5 @@ void Cadastro::carregarArquivo(const string &arquivoNome) {
         animais.push_back(c);
     }
     arquivo.close();
+    cout << "Dados carregados com sucesso de " << arquivoNome << endl;  // Mensagem de sucesso
 }

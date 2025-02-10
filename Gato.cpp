@@ -9,15 +9,45 @@ Gato::Gato(string nome, int idade, string raca, double peso, string cor,
 void Gato::exibir() const {
     cout << "Gato: " << nome << ", Idade: " << idade << ", Raça: " << raca << ", Peso: " << peso
          << ", Cor: " << cor << ", Gênero: " << genero << ", Dono: " << dono << ", Endereço: " << endereco
-         << ", Telefone: " << telefone << ", Histórico Médico: " << historicoMedico << endl;
+         << ", Telefone: " << telefone << ", Historico Medico: " << historicoMedico << endl;
 }
 
-// Método para salvar os dados do gato no arquivo binário corretamente
+// Método para salvar os dados do gato no arquivo binário 
 void Gato::salvar(ofstream &arquivo) const {
-    arquivo.write((char*)this, sizeof(Gato));
+    arquivo.write(nome.c_str(), nome.size() + 1);
+    arquivo.write((char*)&idade, sizeof(idade));
+    arquivo.write(raca.c_str(), raca.size() + 1);
+    arquivo.write((char*)&peso, sizeof(peso));
+    arquivo.write(cor.c_str(), cor.size() + 1);
+    arquivo.write(genero.c_str(), genero.size() + 1);
+    arquivo.write(dono.c_str(), dono.size() + 1);
+    arquivo.write(endereco.c_str(), endereco.size() + 1);
+    arquivo.write(telefone.c_str(), telefone.size() + 1);
+    arquivo.write(historicoMedico.c_str(), historicoMedico.size() + 1);
 }
 
-// Método para carregar os dados do gato do arquivo binário corretamente
+// Método para carregar os dados do gato do arquivo binário 
 void Gato::carregar(ifstream &arquivo) {
-    arquivo.read((char*)this, sizeof(Gato));
+    char buffer[100];
+    arquivo.getline(buffer, 100, '\0');
+    nome = buffer;
+    arquivo.read((char*)&idade, sizeof(idade));
+    arquivo.getline(buffer, 100, '\0');
+    raca = buffer;
+    arquivo.read((char*)&peso, sizeof(peso));
+    arquivo.getline(buffer, 100, '\0');
+    cor = buffer;
+    arquivo.getline(buffer, 100, '\0');
+    genero = buffer;
+    arquivo.getline(buffer, 100, '\0');
+    dono = buffer;
+    arquivo.getline(buffer, 100, '\0');
+    endereco = buffer;
+    arquivo.getline(buffer, 100, '\0');
+    telefone = buffer;
+    arquivo.getline(buffer, 100, '\0');
+    historicoMedico = buffer;
 }
+
+
+

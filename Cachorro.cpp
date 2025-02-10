@@ -9,10 +9,10 @@ Cachorro::Cachorro(string nome, int idade, string raca, double peso, string cor,
 void Cachorro::exibir() const {
     cout << "Cachorro: " << nome << ", Idade: " << idade << ", Raça: " << raca << ", Peso: " << peso
          << ", Cor: " << cor << ", Gênero: " << genero << ", Dono: " << dono << ", Endereço: " << endereco
-         << ", Telefone: " << telefone << ", Histórico Médico: " << historicoMedico << endl;
+         << ", Telefone: " << telefone << ", Historico Medico: " << historicoMedico << endl;
 }
 
-// Método para salvar os dados do cachorro no arquivo binário corretamente
+// Método para salvar os dados do cachorro no arquivo binário 
 void Cachorro::salvar(ofstream &arquivo) const {
     arquivo.write(nome.c_str(), nome.size() + 1);
     arquivo.write((char*)&idade, sizeof(idade));
@@ -26,7 +26,7 @@ void Cachorro::salvar(ofstream &arquivo) const {
     arquivo.write(historicoMedico.c_str(), historicoMedico.size() + 1);
 }
 
-// Método para carregar os dados do cachorro do arquivo binário corretamente
+// Método para carregar os dados do cachorro do arquivo binário 
 void Cachorro::carregar(ifstream &arquivo) {
     char buffer[100];
     arquivo.getline(buffer, 100, '\0');
