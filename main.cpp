@@ -38,25 +38,32 @@ int main() {
                 getline(cin, raca);
                 cout << "Peso: ";
                 cin >> peso;
-                cout << "Cor: ";
-                cin.ignore();
-                getline(cin, cor);
-                cout << "Gênero: ";
-                getline(cin, genero);
-                cout << "Dono: ";
-                getline(cin, dono);
-                cout << "Endereço: ";
-                getline(cin, endereco);
-                cout << "Telefone: ";
-                getline(cin, telefone);
-                cout << "Histórico Médico: ";
-                getline(cin, historicoMedico);
 
                 if (tipo == "Cachorro") {
-                    Cachorro* c = new Cachorro(nome, idade, raca, peso, cor, genero, dono, endereco, telefone, historicoMedico);
+                    // 4 atributos comuns
+                    cout << "Cor: ";
+                    cin.ignore();
+                    getline(cin, cor);
+                    cout << "Gênero: ";
+                    getline(cin, genero);
+                    cout << "Histórico Médico: ";
+                    getline(cin, historicoMedico);
+                    
+                    // Criar objeto Cachorro
+                    Cachorro* c = new Cachorro(nome, idade, raca, peso, cor, genero, historicoMedico);
                     cadastro.adicionar(c);
                 } else if (tipo == "Gato") {
-                    Gato* g = new Gato(nome, idade, raca, peso, cor, genero, dono, endereco, telefone, historicoMedico);
+                    // 4 atributos comuns
+                    cout << "Dono: ";
+                    cin.ignore();
+                    getline(cin, dono);
+                    cout << "Endereço: ";
+                    getline(cin, endereco);
+                    cout << "Telefone: ";
+                    getline(cin, telefone);
+                    
+                    // Criar objeto Gato
+                    Gato* g = new Gato(nome, idade, raca, peso, dono, endereco, telefone);
                     cadastro.adicionar(g);
                 } else {
                     cout << "Tipo de animal inválido!" << endl;

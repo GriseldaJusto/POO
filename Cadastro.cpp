@@ -28,30 +28,41 @@ void Cadastro::atualizar(const string& nome) {
             cout << "Atualizando dados de " << nome << "..." << endl;
             
             int novaIdade;
-            cout << "Nova idade (não pode ser negativa): ";
+            cout << "Nova idade: ";
             cin >> novaIdade;
-            if (novaIdade >= 0) animal->setIdade(novaIdade);
-            
-            string novoDono;
-            cout << "Novo dono: ";
-            cin.ignore();
-            getline(cin, novoDono);
-            animal->setDono(novoDono);
+            if (novaIdade >= 0) animal->setIdade(novaIdade); // Atualizando a idade
 
-            string novoEndereco;
-            cout << "Novo endereço: ";
-            getline(cin, novoEndereco);
-            animal->setEndereco(novoEndereco);
+            double novoPeso;
+            cout << "Novo peso: ";
+            cin >> novoPeso;
+            animal->setPeso(novoPeso);  // Atualizando o peso
 
-            string novoTelefone;
-            cout << "Novo telefone: ";
-            getline(cin, novoTelefone);
-            animal->setTelefone(novoTelefone);
+            if (Cachorro* c = dynamic_cast<Cachorro*>(animal)) {
+                string novoHistorico;
+                
+                // Atualiza o histórico médico para o cachorro
+                cout << "Novo histórico médico: ";
+                cin.ignore();  // Ignorar o newline residual do cin
+                getline(cin, novoHistorico);
+                c->setHistoricoMedico(novoHistorico);
 
-            string novoHistorico;
-            cout << "Novo histórico médico: ";
-            getline(cin, novoHistorico);
-            animal->setHistoricoMedico(novoHistorico);
+            } else if (Gato* g = dynamic_cast<Gato*>(animal)) {
+                string novoDono, novoEndereco, novoTelefone;
+                
+                // Atualiza o dono, endereço e telefone para o gato
+                cout << "Novo dono: ";
+                cin.ignore();  // Ignorar o newline residual do cin
+                getline(cin, novoDono);
+                g->setDono(novoDono);
+
+                cout << "Novo endereço: ";
+                getline(cin, novoEndereco);
+                g->setEndereco(novoEndereco);
+
+                cout << "Novo telefone: ";
+                getline(cin, novoTelefone);
+                g->setTelefone(novoTelefone);
+            }
 
             cout << "Os dados do animal foram atualizados com sucesso!" << endl;  // Mensagem de sucesso
             return;
@@ -78,10 +89,23 @@ void Cadastro::salvarArquivo(const string &arquivoNome) const {
         cout << "Erro ao abrir o arquivo!" << endl;
         return;
     }
+
     for (const auto& animal : animais) {
+        string tipo;
+        if (dynamic_cast<Cachorro*>(animal)) {
+            tipo = "Cachorro";
+        } else if (dynamic_cast<Gato*>(animal)) {
+            tipo = "Gato";
+        }
+
+        // Salvar o tipo do animal antes dos dados
+        arquivo.write(tipo.c_str(), tipo.size() + 1);
+
+        // Salvar os dados do animal
         animal->salvar(arquivo);
     }
-    arquivo.close();
+
+    arquivo.close(); 
     cout << "Dados salvos com sucesso em " << arquivoNome << endl;  // Mensagem de sucesso
 }
 
@@ -91,12 +115,26 @@ void Cadastro::carregarArquivo(const string &arquivoNome) {
         cout << "Erro ao abrir o arquivo!" << endl;
         return;
     }
+
     while (!arquivo.eof()) {
-        Cachorro* c = new Cachorro();
-        c->carregar(arquivo);
-        if (arquivo.eof()) break;
-        animais.push_back(c);
+        char tipoBuffer[10] = {0};  // Inicializa o buffer com zeros
+        arquivo.read(tipoBuffer, sizeof(tipoBuffer) - 1);  // Lê até 9 caracteres, deixando espaço para '\0'
+
+        string tipo(tipoBuffer);
+
+        if (arquivo.eof()) break;  // Verifica se atingimos o final do arquivo
+
+        if (tipo == "Cachorro") {
+            Cachorro* c = new Cachorro();
+            c->carregar(arquivo);
+            animais.push_back(c);
+        } else if (tipo == "Gato") {
+            Gato* g = new Gato();
+            g->carregar(arquivo);
+            animais.push_back(g);
+        }
     }
+
     arquivo.close();
-    cout << "Dados carregados com sucesso de " << arquivoNome << endl;  // Mensagem de sucesso
+    cout << "Dados carregados com sucesso de " << arquivoNome << endl;
 }
