@@ -24,6 +24,9 @@ int main() {
                 string nome, raca, cor, genero, dono, endereco, telefone, historicoMedico;
                 int idade;
                 double peso;
+                cout << "Digite o tipo do animal (Cachorro/Gato): ";
+                string tipo;
+                cin >> tipo;
                 cout << "Digite os detalhes do animal: " << endl;
                 cout << "Nome: ";
                 cin.ignore();
@@ -49,8 +52,15 @@ int main() {
                 cout << "Histórico Médico: ";
                 getline(cin, historicoMedico);
 
-                Cachorro* c = new Cachorro(nome, idade, raca, peso, cor, genero, dono, endereco, telefone, historicoMedico);
-                cadastro.adicionar(c);
+                if (tipo == "Cachorro") {
+                    Cachorro* c = new Cachorro(nome, idade, raca, peso, cor, genero, dono, endereco, telefone, historicoMedico);
+                    cadastro.adicionar(c);
+                } else if (tipo == "Gato") {
+                    Gato* g = new Gato(nome, idade, raca, peso, cor, genero, dono, endereco, telefone, historicoMedico);
+                    cadastro.adicionar(g);
+                } else {
+                    cout << "Tipo de animal inválido!" << endl;
+                }
                 break;
             }
             case 2:

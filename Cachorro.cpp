@@ -7,7 +7,9 @@ Cachorro::Cachorro(string nome, int idade, string raca, double peso, string cor,
 
 // Método para exibir os detalhes do cachorro
 void Cachorro::exibir() const {
-    cout << "Cachorro: " << nome << ", Idade: " << idade << endl;
+    cout << "Cachorro: " << nome << ", Idade: " << idade << ", Raça: " << raca << ", Peso: " << peso
+         << ", Cor: " << cor << ", Gênero: " << genero << ", Dono: " << dono << ", Endereço: " << endereco
+         << ", Telefone: " << telefone << ", Histórico Médico: " << historicoMedico << endl;
 }
 
 // Método para salvar os dados do cachorro no arquivo binário corretamente

@@ -7,7 +7,9 @@ Gato::Gato(string nome, int idade, string raca, double peso, string cor,
 
 // Método para exibir os detalhes do gato
 void Gato::exibir() const {
-    cout << "Gato: " << nome << ", Idade: " << idade << endl;
+    cout << "Gato: " << nome << ", Idade: " << idade << ", Raça: " << raca << ", Peso: " << peso
+         << ", Cor: " << cor << ", Gênero: " << genero << ", Dono: " << dono << ", Endereço: " << endereco
+         << ", Telefone: " << telefone << ", Histórico Médico: " << historicoMedico << endl;
 }
 
 // Método para salvar os dados do gato no arquivo binário corretamente
