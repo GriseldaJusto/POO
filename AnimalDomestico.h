@@ -1,34 +1,28 @@
 #ifndef ANIMALDOMESTICO_H
 #define ANIMALDOMESTICO_H
 
-#include <iostream>
-#include <fstream>
 #include <string>
-using namespace std;
+#include "Pessoa.h"  // Importa a classe Pessoa
 
 class AnimalDomestico {
-    protected:
-        string nome;
-        int idade;
-        string raca;
-        double peso;
-    public:
-        AnimalDomestico(string nome = "", int idade = 0, string raca = "", double peso = 0.0);
-        virtual ~AnimalDomestico() {}
-    
-        virtual void exibir() const = 0;
-        virtual void salvar(ofstream &arquivo) const = 0;
-        virtual void carregar(ifstream &arquivo) = 0;
-    
-        // Métodos de acesso
-        string getNome() const { return nome; }
-        int getIdade() const { return idade; }
-        string getRaca() const { return raca; }
-        double getPeso() const { return peso; }
+protected:
+    int codigoRegistro;
+    std::string nomeAnimal;
+    int idade;
+    char sexo;
+    float peso;
+    Pessoa* tutor;  // Ponteiro para o tutor
 
-        //Adicionando o setter 
-        void setIdade(int novaIdade) { idade = novaIdade; }
-        void setPeso(int novoPeso) { peso = novoPeso; }
-    };
-    
+public:
+    AnimalDomestico(int codigo, std::string nome, int idade, char sexo, float peso, Pessoa* tutor = nullptr);
+    virtual ~AnimalDomestico() = default;
+
+    virtual void exibirInfo() const = 0;
+    int getCodigoRegistro() const;
+    void setIdade(int idade);
+    void setPeso(float peso);
+    Pessoa* getTutor() const;  // Getter do tutor
+    void setTutor(Pessoa* novoTutor);  // Setter do tutor
+};
+
 #endif

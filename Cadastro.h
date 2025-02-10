@@ -1,21 +1,22 @@
 #ifndef CADASTRO_H
 #define CADASTRO_H
 
-#include "Cachorro.h"
-#include "Gato.h"
+#include "AnimalDomestico.h"
+#include "Pessoa.h"
 #include <vector>
+#include <string>
 
 class Cadastro {
 private:
-    vector<AnimalDomestico*> animais;
+    std::vector<AnimalDomestico*> animais;
+
 public:
-    ~Cadastro();
-    void adicionar(AnimalDomestico* animal);
-    void listar() const;
-    void atualizar(const string& nome);
-    void remover(const string& nome);
-    void salvarArquivo(const string &arquivoNome) const;
-    void carregarArquivo(const string &arquivoNome);
+    void adicionarAnimal(AnimalDomestico* animal);
+    void listarAnimais() const;
+    void removerAnimal(int codigo);
+    void atualizarAnimal(int codigo);
+    void salvarArquivo(const std::string& filename);
+    void carregarArquivo(const std::string& filename);
 };
 
 #endif

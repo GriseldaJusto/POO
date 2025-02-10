@@ -1,5 +1,25 @@
 #include "AnimalDomestico.h"
+#include <iostream>
 
-// Implementação do construtor da classe AnimalDomestico
-AnimalDomestico::AnimalDomestico(string nome, int idade, string raca, double peso)
-    : nome(nome), idade(idade), raca(raca), peso(peso) {}
+AnimalDomestico::AnimalDomestico(int codigo, std::string nome, int idade, char sexo, float peso, Pessoa* tutor)
+    : codigoRegistro(codigo), nomeAnimal(nome), idade(idade), sexo(sexo), peso(peso), tutor(tutor) {}
+
+int AnimalDomestico::getCodigoRegistro() const {
+    return codigoRegistro;
+}
+
+void AnimalDomestico::setIdade(int idade) {
+    this->idade = idade;
+}
+
+void AnimalDomestico::setPeso(float peso) {
+    this->peso = peso;
+}
+
+Pessoa* AnimalDomestico::getTutor() const {
+    return tutor;
+}
+
+void AnimalDomestico::setTutor(Pessoa* novoTutor) {
+    tutor = novoTutor;
+}

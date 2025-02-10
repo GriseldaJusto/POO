@@ -1,92 +1,113 @@
+#include <iostream>
 #include "Cadastro.h"
+#include "Gato.h"
+#include "Peixe.h"
+
+using namespace std;
+
+void exibirMenu() {
+    cout << "=== Sistema de Cadastro de Animais ===\n";
+    cout << "1. Adicionar Animal\n";
+    cout << "2. Listar Animais\n";
+    cout << "3. Atualizar Animal\n";
+    cout << "4. Remover Animal\n";
+    cout << "5. Salvar em Arquivo\n";
+    cout << "6. Carregar do Arquivo\n";
+    cout << "7. Sair\n";
+    cout << "Escolha uma opcao: ";
+}
 
 int main() {
     Cadastro cadastro;
-
-    while (true) {
-        cout << "=== Sistema de Cadastro de Animais ===" << endl;
-        cout << "1. Adicionar Animal" << endl;
-        cout << "2. Listar Animais" << endl;
-        cout << "3. Atualizar Animal" << endl;
-        cout << "4. Remover Animal" << endl;
-        cout << "5. Salvar em Arquivo" << endl;
-        cout << "6. Carregar do Arquivo" << endl;
-        cout << "7. Sair" << endl;
-
-        int opcao;
-        cout << "Escolha uma opção: ";
+    int opcao;
+    do {
+        exibirMenu();
         cin >> opcao;
-
-        if (opcao == 7) break;
-
+        cin.ignore();
         switch (opcao) {
             case 1: {
-                string nome, raca, cor, genero, dono, endereco, telefone, historicoMedico;
-                int idade;
-                double peso;
-                cout << "Digite o tipo do animal (Cachorro/Gato): ";
-                string tipo;
-                cin >> tipo;
-                cout << "Digite os detalhes do animal: " << endl;
-                cout << "Nome: ";
+                int codigo, idade;
+                float peso;
+                string nome;
+                char sexo;
+                
+                cout << "Codigo de registro: ";
+                cin >> codigo;
                 cin.ignore();
+                
+                cout << "Nome do animal: ";
                 getline(cin, nome);
+                
                 cout << "Idade: ";
                 cin >> idade;
-                cout << "Raça: ";
-                cin.ignore();
-                getline(cin, raca);
+                
+                cout << "Sexo (M/F): ";
+                cin >> sexo;
+                
                 cout << "Peso: ";
                 cin >> peso;
+                cin.ignore();
 
-                if (tipo == "Cachorro") {
-                    // 4 atributos comuns
-                    cout << "Cor: ";
-                    cin.ignore();
-                    getline(cin, cor);
-                    cout << "Gênero: ";
-                    getline(cin, genero);
-                    cout << "Histórico Médico: ";
-                    getline(cin, historicoMedico);
-                    
-                    // Criar objeto Cachorro
-                    Cachorro* c = new Cachorro(nome, idade, raca, peso, cor, genero, historicoMedico);
-                    cadastro.adicionar(c);
-                } else if (tipo == "Gato") {
-                    // 4 atributos comuns
-                    cout << "Dono: ";
-                    cin.ignore();
-                    getline(cin, dono);
-                    cout << "Endereço: ";
-                    getline(cin, endereco);
-                    cout << "Telefone: ";
-                    getline(cin, telefone);
-                    
-                    // Criar objeto Gato
-                    Gato* g = new Gato(nome, idade, raca, peso, dono, endereco, telefone);
-                    cadastro.adicionar(g);
-                } else {
-                    cout << "Tipo de animal inválido!" << endl;
+                // Informações do tutor
+                string nomeTutor, endereco, telefone;
+                cout << "Nome do tutor: ";
+                getline(cin, nomeTutor);
+                cout << "Endereco do tutor: ";
+                getline(cin, endereco);
+                cout << "Telefone do tutor: ";
+                getline(cin, telefone);
+
+                Pessoa* tutor = new Pessoa(nomeTutor, endereco, telefone);
+
+                cout << "Tipo de animal (1 - Gato, 2 - Peixe): ";
+                int tipoAnimal;
+                cin >> tipoAnimal;
+
+                if (tipoAnimal == 1) {
+                    bool ronroneia, usaCaixa;
+                    string raca, pelo;
+                    cout << "Ronroneia com frequencia? (1 - Sim, 0 - Não): ";
+                    cin >> ronroneia;
+                    cout << "Usa caixa de areia? (1 - Sim, 0 - Não): ";
+                    cin >> usaCaixa;
+                    cout << "Raca: ";
+                    cin.ignore();  // Limpar o buffer
+                    getline(cin, raca);
+                    cout << "Tipo de pelo: ";
+                    getline(cin, pelo);
+
+                    Gato* gato = new Gato(codigo, nome, idade, sexo, peso, ronroneia, usaCaixa, raca, pelo, tutor);
+                    cadastro.adicionarAnimal(gato);
+                } else if (tipoAnimal == 2) {
+                    string escamas, temperatura, especie;
+                    cout << "Tipo de escamas: ";
+                    cin.ignore();  // Limpar o buffer
+                    getline(cin, escamas);
+                    cout << "Temperatura da agua: ";
+                    getline(cin, temperatura);
+                    cout << "Especie: ";
+                    getline(cin, especie);
+
+                    Peixe* peixe = new Peixe(codigo, nome, idade, sexo, peso, escamas, temperatura, especie, tutor);
+                    cadastro.adicionarAnimal(peixe);
                 }
                 break;
             }
             case 2:
-                cadastro.listar();
+                cadastro.listarAnimais();
                 break;
             case 3: {
-                string nome;
-                cout << "Digite o nome do animal a ser atualizado: ";
-                cin.ignore();
-                getline(cin, nome);
-                cadastro.atualizar(nome);
+                int codigo;
+                cout << "Digite o codigo do animal a ser atualizado: ";
+                cin >> codigo;
+                cadastro.atualizarAnimal(codigo);
                 break;
             }
             case 4: {
-                string nome;
-                cout << "Digite o nome do animal a ser removido: ";
-                cin.ignore();
-                getline(cin, nome);
-                cadastro.remover(nome);
+                int codigo;
+                cout << "Digite o codigo do animal a ser removido: ";
+                cin >> codigo;
+                cadastro.removerAnimal(codigo);
                 break;
             }
             case 5:
@@ -95,11 +116,13 @@ int main() {
             case 6:
                 cadastro.carregarArquivo("animais.dat");
                 break;
+            case 7:
+                cout << "Saindo...\n";
+                break;
             default:
-                cout << "Opção inválida!" << endl;
+                cout << "Opcao invalida.\n";
         }
-    }
+    } while (opcao != 7);
 
     return 0;
 }
-
