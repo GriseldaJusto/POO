@@ -1,3 +1,5 @@
+
+//main.cpp
 #include <iostream>
 #include "Cadastro.h"
 #include "Gato.h"
@@ -78,6 +80,7 @@ int main() {
 
                     Gato* gato = new Gato(codigo, nome, idade, sexo, peso, ronroneia, usaCaixa, raca, pelo, tutor);
                     cadastro.adicionarAnimal(gato);
+                    cout << "Gato adicionado com sucesso!\n";
                 } else if (tipoAnimal == 2) {
                     string escamas, temperatura, especie;
                     cout << "Tipo de escamas: ";
@@ -90,6 +93,7 @@ int main() {
 
                     Peixe* peixe = new Peixe(codigo, nome, idade, sexo, peso, escamas, temperatura, especie, tutor);
                     cadastro.adicionarAnimal(peixe);
+                    cout << "Peixe adicionado com sucesso!\n";
                 }
                 break;
             }
@@ -101,6 +105,7 @@ int main() {
                 cout << "Digite o codigo do animal a ser atualizado: ";
                 cin >> codigo;
                 cadastro.atualizarAnimal(codigo);
+                cout << "Dados atualizados com sucesso!\n";
                 break;
             }
             case 4: {
@@ -120,7 +125,8 @@ int main() {
                 cout << "Saindo...\n";
                 break;
             default:
-                cout << "Opcao invalida.\n";
+                cout << "Opcao invalida!\n";
+                break;
         }
     } while (opcao != 7);
 

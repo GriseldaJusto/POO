@@ -8,7 +8,7 @@
 
 class Cadastro {
 private:
-    std::vector<AnimalDomestico*> animais;
+    std::vector<AnimalDomestico*> animais;  // Vetor de ponteiros para animais
 
 public:
     void adicionarAnimal(AnimalDomestico* animal);
